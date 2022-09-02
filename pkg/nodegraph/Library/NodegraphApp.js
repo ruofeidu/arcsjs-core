@@ -24,4 +24,10 @@ export const NodegraphApp = class extends App {
     this.userAssembly = [NodegraphRecipe];
     log('Welcome!');
   }
+  // async onservice(runtime, host, {msg, data}) {
+  //   switch (msg) {
+  //     case 'GetParticleCode':
+  //       return 'this is nicely working yay!';
+  //   }
+  // }
 };

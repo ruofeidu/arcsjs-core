@@ -13,6 +13,9 @@ export const RecipeService = async (runtime, host, request) => {
       return updateConnections(host, request.data);
     case 'ParseRecipe':
       return parseRecipe(request.data);
+    case 'GetParticleCode': {
+      return `This is particle: ${request.data.kind}`;
+    }
   }
 };
 

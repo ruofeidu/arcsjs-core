@@ -72,6 +72,9 @@ export class Runtime extends EventEmitter {
   serviceFactory(service) {
     return async (host, request) => service.handle(this, host, request);
   }
+  getParticleFactoryCache() {
+    return particleFactoryCache;
+  }
   async bootstrapParticle(arc, id, meta: ParticleMeta) {
     // make a host
     const host = new Host(id);

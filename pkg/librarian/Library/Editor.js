@@ -7,7 +7,8 @@
  * https://developers.google.com/open-source/licenses/bsd
  */
 ({
-update({name, library}, state) {
+update(inputs, state) {
+  const {name, library} = inputs;
   assign(state, library?.[name] || {code: '', html: ''});
 },
 onChanges({name, library, eventlet: {key, value}}, state) {

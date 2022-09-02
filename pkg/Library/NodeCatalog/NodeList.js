@@ -170,6 +170,7 @@ template: html`
 <div nodetypes-container>
   <div repeat="nodetype_t">{{nodeTypes}}</div>
   <div no-matched-nodes hide$="{{hideNoMatchedNodesLabel}}">No matched nodes</div>
+  <!-- <mwc-button raised>Add</mwc-button> -->
 </div>
 <div info-panel-container xen:style="{{infoPanelContainerStyle}}"
      display$="{{showInfoPanel}}">

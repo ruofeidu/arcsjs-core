@@ -85,7 +85,11 @@ template: html`
       </split-panel>
     </div>
     <!-- right -->
-    <div right center collapsed$="{{rightCollapsed}}" section frame="inspector"></div>
+    <div right center collapsed$="{{rightCollapsed}}" section>
+      <div frame="inspector"></div>
+      <hr>
+      <div frame="coder"></div>
+    </div>
   </div>
   <!-- page 2 -->
   <div flex rows frame="pipelines"></div>

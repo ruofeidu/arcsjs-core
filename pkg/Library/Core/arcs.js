@@ -964,6 +964,9 @@ var _Runtime = class extends EventEmitter {
   serviceFactory(service) {
     return async (host, request) => service.handle(this, host, request);
   }
+  getParticleFactoryCache() {
+    return particleFactoryCache;
+  }
   async bootstrapParticle(arc, id, meta) {
     const host = new Host(id);
     await this.marshalParticle(host, meta);

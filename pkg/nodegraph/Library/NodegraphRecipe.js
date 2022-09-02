@@ -78,6 +78,9 @@ export const NodegraphRecipe = {
     categories: {
       $type: 'JSON',
       $value: categories
+    },
+    nodeCode: {
+      $type: 'JSON',
     }
   },
   main: {
@@ -126,6 +129,23 @@ export const NodegraphRecipe = {
           $inputs: [{data: 'inspectorData'}],
           $outputs: [{data: 'inspectorData'}],
           $staticInputs: {customInspectors}
+        },
+      },
+      coder: {
+        Coder: {
+          $kind: '$app/Library/Coder.js',
+          $inputs: ['selectedNode', 'nodeTypes'],
+          $outputs: ['nodeCode'],
+          $slots: {
+            codeEditor: {
+              CodeEditor: {
+                $kind: '$app/../librarian/Library/Editor.js',
+                $staticInputs: {name: 'helloworld'},          
+                $inputs: [{'library': 'nodeCode'}],
+                $outputs: [{'library': 'nodeCode'}]
+              }
+            }
+          }
         }
       }
     }
