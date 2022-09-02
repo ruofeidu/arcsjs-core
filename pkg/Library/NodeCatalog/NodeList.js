@@ -21,7 +21,11 @@ renderNodeTypes(nodeTypes) {
 },
 
 renderNodeType({$meta}) {
-  return {name: $meta.name, key: this.keyFromMeta($meta)};
+  return {
+    name: $meta.name,
+    key: this.keyFromMeta($meta),
+    showDeleteIcon: String(['custom', 'pipeline'].includes($meta.category))
+  };
 },
 
 sortNodeTypes(t1, t2) {
@@ -79,6 +83,15 @@ onHoverNodeType({eventlet: {key, value}, selectedNodeTypes}, state) {
 onMouseOutNodeType(inputs, state) {
   state.showInfoPanel = false;
   return {hoverEvent: null};
+},
+
+onDelete({eventlet: {key}, nodeTypes}) {
+  const [category, name] = key.split(this.catalogDelimiter);
+  const index = this.findNodeTypeIndex({name, category}, nodeTypes);
+  nodeTypes.splice(index, 1);
+  // TODO: delete these nodes from all pipelines!
+  // TODO: node catalog isn't being refreshed!
+  return {nodeTypes};
 },
 
 template: html`
@@ -164,12 +177,15 @@ template: html`
 </div>
 
 <template nodetype_t>
-  <draggable-item key="{{key}}"
-                  name="{{name}}"
-                  on-enter="onHoverNodeType"
-                  on-leave="onMouseOutNodeType"
-                  on-item-clicked="onItemClick">
- </draggable-item>
+  <div bar>
+    <draggable-item key="{{key}}"
+                    name="{{name}}"
+                    on-enter="onHoverNodeType"
+                    on-leave="onMouseOutNodeType"
+                    on-item-clicked="onItemClick">
+    </draggable-item>
+    <mwc-icon-button key="{{key}}" on-click="onDelete" icon="delete" display$="{{showDeleteIcon}}"></mwc-icon-button>
+  </div>
 </template>
 
 `

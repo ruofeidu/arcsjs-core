@@ -255,7 +255,40 @@
   async onRefresh({publicPipelinesUrl}) {
     const publicPipelines = await this.fetchPublicPipelines(publicPipelinesUrl);
     return {publicPipelines};
-  },  
+  },
+  ///////////////////////
+  onSaveClicked({pipeline, nodeTypes}) {
+    const newType = this.pipepineToNodeType(pipeline, nodeTypes);
+    return {nodeTypes: [...nodeTypes, newType]};
+  },
+  pipepineToNodeType(pipeline, nodeTypes) {
+    const nodeType = {
+      $meta: {
+        name: pipeline.$meta.name,
+        category: 'Type',
+      },
+      $stores: {}
+    };
+    pipeline.nodes.forEach(node => {
+      const type = nodeTypes.find(t => t.$meta.name === node.name);
+      entries(type.$stores || {}).forEach(([name, store]) => {
+        nodeType.$stores[name] = {...store};
+        if (nodeType.$stores[name].connection) {
+          nodeType.$stores[name].connection = false;
+          nodeType.$stores[name].noinspect = true;
+        }
+      });
+      this.getParticleNames(type).forEach(particleName => {
+        nodeType[`${node.key}${particleName}`] = type[particleName];
+      });
+    });
+    return nodeType;
+  },
+  getParticleNames(nodeType) {
+    const notKeyword = name => !name.startsWith('$'); return nodeType && keys(nodeType).filter(notKeyword);
+  },
+///////////////////////
+
   template: html`
 <style>
   :host {
@@ -290,6 +323,7 @@
   <mwc-icon-button title="Delete Pipeline" on-click="onDelete" icon="delete" display$="{{showDeleteIcon}}"></mwc-icon-button>
   <input rename type="text" value="{{name}}" display$="{{showRenameInput}}" autofocus on-change="onRename" on-blur="onRenameBlur">
   <mwc-icon-button title="Rename Pipeline" on-click="onRenameClicked" display$="{{showRenameIcon}}" icon="edit"></mwc-icon-button>
+  <mwc-icon-button on-click="onSaveClicked" icon="save"></mwc-icon-button>
   <div column separator></div>
   <select title="Publish Target" display$="{{showPublish}}" on-change="onPublishPathChanged" repeat="option_t">{{publishKeys}}</select>
   <mwc-icon-button title="Publish Pipeline" on-click="onShare" icon="public" display$="{{showPublish}}"></mwc-icon-button>

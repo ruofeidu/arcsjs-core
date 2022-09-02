@@ -34,7 +34,8 @@ export const NodeCatalogParticles = {
         CategoryCatalog: {
           $kind: '$library/NodeCatalog/CategoryCatalog',
           $inputs: [
-            'nodeTypes',
+            // 'nodeTypes',
+            {'nodeTypes': 'allNodeTypes'},
             'categories',
             {'search': 'nodeSearch'}
           ],

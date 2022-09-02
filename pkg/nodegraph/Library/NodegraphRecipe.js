@@ -16,6 +16,7 @@ const PipelineToolbar = {
   $inputs: [
     {pipeline: 'selectedPipeline'},
     'pipelines',
+    'nodeTypes'
   ],
   $staticInputs: {
     publishPaths: {
@@ -24,7 +25,8 @@ const PipelineToolbar = {
   },
   $outputs: [
     {pipeline: 'selectedPipeline'},
-    'pipelines'
+    'pipelines',
+    'nodeTypes'
   ],
   $slots: {
     chooser: {
@@ -58,6 +60,10 @@ export const NodegraphRecipe = {
     selectedNode: {
       $type: 'JSON'
     },
+    allNodeTypes: {
+      $type: '[JSON]',
+      $value: []
+    },
     nodeTypes: {
       $type: '[JSON]',
       $value: nodeTypes
@@ -76,6 +82,8 @@ export const NodegraphRecipe = {
   },
   main: {
     $kind: '$app/Library/Nodegraph',
+    $inputs: ['pipelines', 'nodeTypes'],
+    $outputs: ['allNodeTypes'],
     $slots: {
       catalog: NodeCatalogRecipe,
       toolbar: {

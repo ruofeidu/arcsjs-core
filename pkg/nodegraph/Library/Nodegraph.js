@@ -7,6 +7,13 @@
  * https://developers.google.com/open-source/licenses/bsd
  */
 ({
+update({pipelines, nodeTypes}) {
+  return {
+    allNodeTypes: [
+      ...nodeTypes,
+      ...pipelines.map(p => ({...p, $meta: {...p.$meta, category: 'pipeline'}}))
+    ]};
+},
 render(inputs, {leftCollapsed, rightCollapsed}) {
   return {
     leftCollapsed,
