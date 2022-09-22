@@ -14,7 +14,13 @@ export const Librarian = {
   },
   $stores: {
     particle: {
-      $type: '[Particle]',
+      $type: 'Particle',
+      // TODO(mariakleiner): if not inspected, changing in Designer/Runner doesn't affect the pipeline!
+      // noinspect: true
+      //
+    },
+    recipe: {
+      $type: 'Recipe',
       // TODO(mariakleiner): if not inspected, changing in Designer/Runner doesn't affect the pipeline!
       // noinspect: true
       //
@@ -28,7 +34,7 @@ export const Librarian = {
   },
   customParticle: {
     $kind: '$app/Library/Librarian/CustomParticle',
-    $inputs: ['particle', 'nodeKey'],
-    $outputs: ['particle']
+    $inputs: ['particle', 'recipe', 'nodeKey'],
+    $outputs: ['particle', 'recipe']
   }
 };

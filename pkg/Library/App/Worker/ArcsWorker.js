@@ -190,6 +190,9 @@ const handlers = {
   addRecipe: async ({arc, recipe}) => {
     return Chef.execute(recipe, user, await requireArc(arc));
   },
+  removeRecipe: async ({arc, recipe}) => {
+    return Chef.evacipate(recipe, user, await requireArc(arc));
+  },
   addAssembly: async ({arc, recipes}) => {
     const realArc = await requireArc(arc);
     return Chef.executeAll(recipes, user, realArc);

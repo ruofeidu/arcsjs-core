@@ -17,6 +17,7 @@ import {TensorFlowService} from '../../Library/TensorFlow/TensorFlowService.js';
 import {ShaderService} from '../../Library/Shader/ShaderService.js';
 import {NodegraphRecipe} from './NodegraphRecipe.js';
 import {logFactory} from '../../Library/Core/utils.min.js';
+import {NodesConnector} from './Librarian/NodesConnector.js';
 
 const log = logFactory(true, 'Nodegraph', 'navy');
 
@@ -29,15 +30,35 @@ export const NodegraphApp = class extends App {
     this.userAssembly = [NodegraphRecipe];
     log('Welcome!');
   }
-
+  async spinup() {
+    await super.spinup();
+    //
+    const nodeTypes = await this.arcs.get('user', 'nodeTypes');
+    const globalStores = await this.arcs.get('user', 'globalStores');
+    this.nodesConnector = new NodesConnector({nodeTypes, globalStores});
+  }
   // application service
   async onservice(runtime, host, {msg, data}) {
     switch (msg) {
+      case 'addRecipe':
+        return this.addRecipe(runtime, host, data);
+      case 'removeRecipe':
+        return this.removeRecipe(runtime, host, data);
+      case 'addStore':
+        return this.addStore(runtime, host, data);
       case 'addParticle':
         return this.addParticle(runtime, host, data);
       case 'destroyParticle':
         return this.destroyParticle(runtime, host, data);
     }
+  }
+  async addRecipe(runtime, host, {recipe}) {
+    this.arcs.addRecipe(recipe, 'user');
+    return true;
+  }
+  async removeRecipe(runtime, host, {recipe}) {
+    this.arcs.removeRecipe(recipe, 'user');
+    return true;
   }
   async addParticle(runtime, host, {name, meta, code}) {
     this.arcs.createParticle(name, 'user', meta, code);
