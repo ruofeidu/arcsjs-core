@@ -45,7 +45,7 @@ export const nodeTypes = [
   ...values(displayNodes),
   ...values(shaderNodes),
   //SceneNode,
-  // ThreejsEditorNode,
+  ThreejsEditorNode,
   ...values(customNodes)
   // ...values(locationNodes),
   // ...values(homescreen),

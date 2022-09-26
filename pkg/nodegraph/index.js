@@ -12,7 +12,7 @@ import {NodegraphApp} from './Library/NodegraphApp.js';
 
 try {
   const app = globalThis.app = new NodegraphApp(paths);
-  await app.spinup();
+  app.spinupPromise = await app.spinup();
 } catch(x) {
   console.error(x);
 }

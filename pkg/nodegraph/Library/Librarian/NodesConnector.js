@@ -18,21 +18,6 @@ export class NodesConnector {
     values(nodeTypes).forEach(t => this.nodeTypeMap[t.$meta.name] = this.flattenNodeType(t));  
     this.globalStores = globalStores;
   }
-// async update(inputs, state, {service}) {
-//   const {pipeline, nodeTypes} = inputs;
-//   if (!state.nodeTypeMap) {
-//     state.nodeTypeMap = {};
-//     values(nodeTypes).forEach(t => state.nodeTypeMap[t.$meta.name] = this.flattenNodeType(t));
-//   }
-//   if (pipeline?.nodes) {
-//     if (this.pipelineChanged(pipeline, state.pipeline)
-//         || this.nodesDidChange(pipeline.nodes, state.nodes)) {
-//       state.pipeline = pipeline;
-//       state.nodes = [...pipeline.nodes];
-//       return this.updateNodes(inputs, state);
-//     }
-//   }
-// }
 
   flattenNodeType(nodeType, $container) {
     const flattened = {};
@@ -90,15 +75,16 @@ export class NodesConnector {
 updateNodes({pipeline, selectedNode/*, customInspectors, inspectorData globalStores*/}) { //, {nodeTypeMap}) {
   pipeline.nodes = pipeline.nodes.map(
     node => this.updateNodeConnectionCandidates({node, pipeline /*, nodeTypeMap, globalStores*/}));
-  const recipes = pipeline.nodes
-    .map(node => this.recipeForNode(node, /*nodeTypeMap,*/ pipeline, /*customInspectors, inspectorData || 'inspectorData',*/ globalStores))
-    .filter(recipe => recipe)
-    ;
-  return {
-    pipeline,
-    recipes,
-    selectedNode: pipeline.nodes.find(n => n.key === selectedNode?.key),
-  };
+  // const recipes = pipeline.nodes
+  //   .map(node => this.recipeForNode(node, /*nodeTypeMap,*/ pipeline)) //, /*customInspectors, inspectorData || 'inspectorData',*/ globalStores))
+  //   .filter(recipe => recipe)
+  //   ;
+  // return {
+  //   pipeline,
+  //   // recipes,
+  //   selectedNode: pipeline.nodes.find(n => n.key === selectedNode?.key),
+  // };
+  return pipeline;
 }
 
 updateNodeConnectionCandidates({node, pipeline}) { // nodeTypeMap,*/ globalStores}) {

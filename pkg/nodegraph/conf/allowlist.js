@@ -13,7 +13,7 @@ export * from '../../Library/NodeGraph/dom/node-graph.js';
 export * from '../../Library/NodeGraph/dom/node-graph-editor.js';
 export * from '../../Library/NodeCatalog/draggable-item.js';
 //export * from '../../Library/AFrame/aframe.js';
-// export * from '../../Library/Threejs/threejs-editor.js';
+export * from '../../Library/Threejs/threejs-editor.js';
 
 // n.b. operates in outer context
 

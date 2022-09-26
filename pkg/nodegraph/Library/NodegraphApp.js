@@ -32,10 +32,10 @@ export const NodegraphApp = class extends App {
   }
   async spinup() {
     await super.spinup();
-    //
     const nodeTypes = await this.arcs.get('user', 'nodeTypes');
     const globalStores = await this.arcs.get('user', 'globalStores');
     this.nodesConnector = new NodesConnector({nodeTypes, globalStores});
+    return;
   }
   // application service
   async onservice(runtime, host, {msg, data}) {
@@ -50,6 +50,10 @@ export const NodegraphApp = class extends App {
         return this.addParticle(runtime, host, data);
       case 'destroyParticle':
         return this.destroyParticle(runtime, host, data);
+      case 'updateNodes': {
+        await this.spinupPromise;
+        return this.nodesConnector.updateNodes(data);
+      }
     }
   }
   async addRecipe(runtime, host, {recipe}) {

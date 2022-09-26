@@ -160,8 +160,9 @@ template: html`
   <div flex frame="canvas"></div>
   <code-mirror flex text="{{html}}" key="html" on-code-blur="onChanged"></code-mirror>
   <code-mirror flex text="{{code}}" key="code" on-code-blur="onChanged"></code-mirror>
-  <code-mirror flex text="{{meta}}" key="meta" on-code-blur="onChanged"></code-mirror>
-  <code-mirror flex text="{{recipe}}" key="recipe" on-code-blur="onRecipeChanged"></code-mirror>
+  <code-mirror flex text="{{spec}}" key="spec" on-code-blur="onRecipeChanged"></code-mirror>
+  <!-- <code-mirror flex text="{{meta}}" key="meta" on-code-blur="onChanged"></code-mirror> -->
+  <!-- <code-mirror flex text="{{recipe}}" key="recipe" on-code-blur="onRecipeChanged"></code-mirror> -->
 </mxc-tab-pages>
 `
 });
